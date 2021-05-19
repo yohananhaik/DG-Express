@@ -1,6 +1,20 @@
-{"product": {
-    "title": "draft test",
-    "status":"draft",
-    "rdt_id":"123ABC"
-}
-}
+{
+    "product": {
+      "title": "name",
+      "body_html": "description",
+      "vendor": "brand",
+      "product_type": "groups",
+
+      "variants": [
+        {
+          "title":"name",
+          "price":"price",
+          "sku": "sku",
+          "barcode" :"sku",
+          "inventory_quantity":"onHand",
+          "tracked":"True"
+        }],
+        "options": [{"name": "Size","values": ["size"]}],
+      "status": "draft"
+    }
+  }

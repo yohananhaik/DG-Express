@@ -1,9 +1,10 @@
 import requests
 import configparser
 import json
+import os
 
 config = configparser.ConfigParser()
-config.read('settings.ini')
+config.read(os.path.join(os.path.dirname(os.path.realpath(__file__)) ,'settings.ini'))
 
 shopify_credentials = {k:v for k, v in config['shopify'].items()}
 
@@ -85,8 +86,8 @@ def create_new_collection(collection_name,type):
             "{}_collection".format(type): {
                 "title": collection_name,
                 "rules":[{
-                        "column": "type",
-                        "relation": "contains",
+                        "column": "tag",
+                        "relation": "equals",
                         "condition": collection_name
                     }]
             }})
@@ -94,7 +95,8 @@ def create_new_collection(collection_name,type):
         'Content-Type': 'application/json'
         }
         response = requests.request("POST", collection_url, headers=headers, data=payload)
-        return response.json()['{}_collection'.format(type)]['id']
+        res =response.json()['{}_collection'.format(type)]
+        return res['id']
 
 def update_smart_collections(groups):
     for category in groups:
@@ -119,5 +121,6 @@ def main():
         update_smart_collections(items["groups"])
         for product in items["products"]:
             response = create_new_product(product)
+            print(response)
 
 main()
